@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Co-Workers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+        }
+        .photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 20px auto;
+            border: 3px solid #007BFF;
+        }
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .option {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .option:hover {
+            background-color: #0056b3;
+        }
+        .feedback {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Learn Your Co-Workers</h1>
+        <div>
+            <img src="photo-placeholder.jpg" alt="Co-worker Photo" class="photo" id="coworkerPhoto">
+        </div>
+        <div class="options">
+            <button class="option" onclick="checkAnswer('Alice')">Alice</button>
+            <button class="option" onclick="checkAnswer('Bob')">Bob</button>
+            <button class="option" onclick="checkAnswer('Charlie')">Charlie</button>
+        </div>
+        <div class="feedback" id="feedback"></div>
+    </div>
+
+    <script>
+        // Sample data
+        const coworkers = [
+            { name: 'Alice', photo: 'alice.jpg' },
+            { name: 'Bob', photo: 'bob.jpg' },
+            { name: 'Charlie', photo: 'charlie.jpg' }
+        ];
+
+        let currentIndex = 0;
+
+        // Initialize the app
+        function loadCoworker() {
+            const coworker = coworkers[currentIndex];
+            const photoElement = document.getElementById('coworkerPhoto');
+            photoElement.src = coworker.photo;
+        }
+
+        // Check the user's answer
+        function checkAnswer(selectedName) {
+            const correctName = coworkers[currentIndex].name;
+            const feedbackElement = document.getElementById('feedback');
+
+            if (selectedName === correctName) {
+                feedbackElement.textContent = 'Correct!';
+                feedbackElement.style.color = '#28a745';
+            } else {
+                feedbackElement.textContent = 'Try again!';
+                feedbackElement.style.color = '#dc3545';
+            }
+
+            // Move to the next coworker after a delay
+            setTimeout(() => {
+                feedbackElement.textContent = '';
+                currentIndex = (currentIndex + 1) % coworkers.length;
+                loadCoworker();
+            }, 1000);
+        }
+
+        // Start the app
+        window.onload = loadCoworker;
+    </script>
+</body>
+</html>
